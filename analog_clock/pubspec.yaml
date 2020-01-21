@@ -1,0 +1,79 @@
+name: analog_clock
+description: Analog clock.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_clock_helper:
+    path: ../flutter_clock_helper
+  intl: "^0.16.0"
+  flutter_svg: ^0.15.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/inventory/wood.svg
+    # edibles
+    - assets/inventory/edibles/beer.svg
+    - assets/inventory/edibles/berry_cake.svg
+    - assets/inventory/edibles/berry_jam.svg
+    - assets/inventory/edibles/birthday_cake.svg
+    - assets/inventory/edibles/bread.svg
+    - assets/inventory/edibles/breakfast.svg
+    - assets/inventory/edibles/burger.svg
+    - assets/inventory/edibles/cereals.svg
+    - assets/inventory/edibles/chicken.svg
+    - assets/inventory/edibles/coffee.svg
+    - assets/inventory/edibles/cup_ice_cream.svg
+    - assets/inventory/edibles/fish.svg
+    - assets/inventory/edibles/food.svg
+    - assets/inventory/edibles/fried_chicken.svg
+    - assets/inventory/edibles/fruit_salad.svg
+    - assets/inventory/edibles/fruits.svg
+    - assets/inventory/edibles/grilled.svg
+    - assets/inventory/edibles/gudbud.svg
+    - assets/inventory/edibles/hot_chocolate.svg
+    - assets/inventory/edibles/ice_cream.svg
+    - assets/inventory/edibles/jug_ice_cream.svg
+    - assets/inventory/edibles/juicer.svg
+    - assets/inventory/edibles/kettle.svg
+    - assets/inventory/edibles/lunch.svg
+    - assets/inventory/edibles/mango_jam.svg
+    - assets/inventory/edibles/marmalade.svg
+    - assets/inventory/edibles/milk_carton.svg
+    - assets/inventory/edibles/milkshake.svg
+    - assets/inventory/edibles/orange_juice.svg
+    - assets/inventory/edibles/plate_ice_cream.svg
+    - assets/inventory/edibles/profiterole.svg
+    - assets/inventory/edibles/salad.svg
+    - assets/inventory/edibles/sandwich.svg
+    - assets/inventory/edibles/sandwich_twin.svg
+    - assets/inventory/edibles/snack.svg
+    - assets/inventory/edibles/strawberry_jam.svg
+    - assets/inventory/edibles/supper.svg
+    - assets/inventory/edibles/tea.svg
+    - assets/inventory/edibles/tea_pot.svg
+    - assets/inventory/edibles/toaster.svg
+    - assets/inventory/edibles/unit_ice_cream.svg
+    # lights
+    - assets/inventory/lights/ball_switched_off.svg
+    - assets/inventory/lights/ball_switched_on.svg
+    - assets/inventory/lights/bulb_switched_on.svg
+    - assets/inventory/lights/bulb_switched_off.svg
+    - assets/inventory/lights/cfl_switched_on.svg
+    - assets/inventory/lights/cfl_switched_off.svg
+    - assets/inventory/lights/flicker_switched_on.svg
+    - assets/inventory/lights/flicker_switched_off.svg
+    # wiring
+    - assets/inventory/knot.svg
+    # brightness
+    - assets/inventory/white_disc.svg
