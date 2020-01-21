@@ -21,4 +21,4 @@ A rendering of a contemporary kitchen implementing the illusion of depth via Mat
 * Icons made by Freepik from www.flaticon.com
   Icons licensed under Free license (with attribution)
     - [Flaticon license](./analog_clock/flaticon_license.pdf)
-    - [Freepik license](freepik_license.pdf)
+    - [Freepik license](./analog_clock/freepik_license.pdf)
