@@ -13,6 +13,8 @@ A rendering of a contemporary kitchen implementing the illusion of depth via Mat
       for obtaining time formatted according to our locale
     - https://pub.dev/packages/flutter_svg
       to draw SVG files
+    - https://pub.dev/packages/vector_math
+      to make some calculations
  
  - All icons included in this project are made by [Freepik](https://www.freepik.com/). They have been obtained from www.flaticon.com
 
