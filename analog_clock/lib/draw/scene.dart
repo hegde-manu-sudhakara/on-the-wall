@@ -32,34 +32,14 @@ class Scene extends StatefulWidget {
 }
 
 class _SceneState extends State<Scene> with SingleTickerProviderStateMixin {
-  var _now = DateTime(2020, 1, 29, 3, 59, 15);// DateTime.now();
+  var _now = DateTime.now();
   Timer _timer;
 
   static const Offset offCenter = Offset(-241.5, 1.5);
 
-/*  AnimationController _controller;
-  Animation<Color> _animation;*/
-
   @override
   void initState() {
     super.initState();
-
-/*    _controller = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 10000));
-
-    _animation = TweenSequence([
-      TweenSequenceItem(
-          tween: ColorTween(begin: Colors.grey[300], end: Colors.purple[200]),
-          weight: 1),
-      TweenSequenceItem(
-          tween: ColorTween(begin: Colors.purple[200], end: Colors.grey[300]),
-          weight: 1)
-    ]).animate(_controller)
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          _controller.repeat();
-        }
-      });*/
 
     // Set the initial values.
     _updateTime();
@@ -68,13 +48,12 @@ class _SceneState extends State<Scene> with SingleTickerProviderStateMixin {
   @override
   void dispose() {
     _timer?.cancel();
-//    _controller.dispose();
     super.dispose();
   }
 
   void _updateTime() {
     setState(() {
-      _now = DateTime(2020, 1, 29, 3, 59, 15);// DateTime.now();
+      _now = DateTime.now();
       // Update once per second. Make sure to do it at the beginning of each
       // new second, so that the clock is accurate.
       _timer = Timer(
@@ -104,8 +83,6 @@ class _SceneState extends State<Scene> with SingleTickerProviderStateMixin {
 
     final time = DateFormat.Hms().format(DateTime.now());
 
-//    _controller.forward();
-
     return Semantics.fromProperties(
       properties: SemanticsProperties(
         label: 'Analog clock with time $time',
@@ -115,7 +92,7 @@ class _SceneState extends State<Scene> with SingleTickerProviderStateMixin {
         color: customTheme.backgroundColor,
         child: Stack(
           children: getScreenComponents(
-            customTheme, /* _animation*/
+            customTheme,
           ),
         ),
       ),
