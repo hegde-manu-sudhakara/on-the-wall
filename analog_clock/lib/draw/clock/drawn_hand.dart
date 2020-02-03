@@ -51,6 +51,7 @@ class DrawnHand extends Hand {
       child: SizedBox.expand(
         child: CustomPaint(
           painter: _HandPainter(
+              screenSize: MediaQuery.of(context).size,
               type: type,
               handSize: size,
               lineWidth: thickness,
@@ -66,7 +67,8 @@ class DrawnHand extends Hand {
 /// [CustomPainter] that draws a clock hand.
 class _HandPainter extends CustomPainter {
   _HandPainter(
-      {@required this.type,
+      {@required this.screenSize,
+      @required this.type,
       @required this.handSize,
       @required this.lineWidth,
       @required this.angleRadians,
@@ -81,6 +83,7 @@ class _HandPainter extends CustomPainter {
 
   HandType type;
 
+  Size screenSize;
   Offset offCenter;
   double handSize;
   double lineWidth;
@@ -91,11 +94,19 @@ class _HandPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    double m = screenSize.width * screenSize.height / 900000;
+
     final center = (_center & size).center;
     // We want to start at the top, not at the x-axis, so add pi/2.
     final angle = angleRadians - math.pi / 2.0;
-    final length = size.shortestSide * 0.5 * handSize;
-    final position = center + Offset(math.cos(angle), math.sin(angle)) * length;
+    final length = size.shortestSide * 0.5 * handSize * m;
+    final position = center +
+        Offset(math.cos(angle), math.sin(angle)) *
+            ((type == HandType.Minute
+                    ? 12
+                    : (type == HandType.Hour ? 16 : 200)) *
+                lineWidth *
+                m);
     final linePaint = Paint()
       ..color = color
       ..strokeWidth = lineWidth
@@ -115,15 +126,15 @@ class _HandPainter extends CustomPainter {
     final position2 =
         center + Offset(math.cos(angle2), math.sin(angle2)) * length1;
 
-    final position3 =
-        center + Offset(math.cos(angle1), math.sin(angle1)) * (14 * lineWidth);
-    final position4 =
-        center + Offset(math.cos(angle2), math.sin(angle2)) * (14 * lineWidth);
+    final position3 = center +
+        Offset(math.cos(angle1), math.sin(angle1)) * (14 * lineWidth) * m;
+    final position4 = center +
+        Offset(math.cos(angle2), math.sin(angle2)) * (14 * lineWidth) * m;
 
     final center1 = center -
-        Offset(math.cos(angle3), math.sin(angle3)) * 15 / getAngleWidth(type);
+        Offset(math.cos(angle3), math.sin(angle3)) * 10 / getAngleWidth(type);
     final center2 = center -
-        Offset(math.cos(angle4), math.sin(angle4)) * 15 / getAngleWidth(type);
+        Offset(math.cos(angle4), math.sin(angle4)) * 10 / getAngleWidth(type);
 
     Path handBg = Path()
       ..moveTo(center2.dx, center2.dy)

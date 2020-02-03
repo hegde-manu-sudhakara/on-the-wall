@@ -31,7 +31,7 @@ class Edibles {
     shuffledIndex.shuffle();
 
     randomValues = List.generate(
-      24, // for each hour of the clock
+      24 * 60, // for each hour of the clock
       (index) {
         int count = minCount + Random().nextInt(maxCount - minCount);
         int start = Random().nextInt(_list.length - count);
@@ -45,10 +45,8 @@ class Edibles {
   }
 
   List<Thing> getAvailableAt(DateTime now) {
-    int hour = now.hour;
-
     int itemCount = 0;
-    return randomValues[hour].map(
+    return randomValues[now.hour * 60 + now.minute].map(
       (index) {
         itemCount++;
         return Thing(

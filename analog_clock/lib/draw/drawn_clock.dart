@@ -15,7 +15,6 @@ class DrawnClock {
   final ThemeData theme;
   final Offset offCenter;
   final DateTime _now;
-  final Animation animation;
 
   /// Total distance traveled by a second or a minute hand, each second or minute,
   /// respectively.
@@ -24,7 +23,7 @@ class DrawnClock {
   /// Total distance traveled by an hour hand, each hour, in radians.
   final radiansPerHour = radians(360 / 12);
 
-  DrawnClock(this.theme, this.offCenter, this._now, this.animation);
+  DrawnClock(this.theme, this.offCenter, this._now);
 
   List<Widget> get clock {
     return [

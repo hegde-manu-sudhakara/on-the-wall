@@ -34,6 +34,7 @@ class DrawnFace extends Face {
       child: SizedBox.expand(
         child: CustomPaint(
           painter: _FacePainter(
+              screenSize: MediaQuery.of(context).size,
               accentColor: accentColor,
               focusColor: focusColor,
               markingColor: markingColor,
@@ -47,12 +48,14 @@ class DrawnFace extends Face {
 /// [CustomPainter] that draws a clock hand.
 class _FacePainter extends CustomPainter {
   _FacePainter(
-      {@required this.accentColor,
+      {@required this.screenSize,
+      @required this.accentColor,
       @required this.focusColor,
       @required this.markingColor,
       this.offCenter})
       : assert(accentColor != null);
 
+  Size screenSize;
   Offset offCenter;
   Color accentColor;
   Color focusColor;
@@ -79,11 +82,13 @@ class _FacePainter extends CustomPainter {
       ..strokeWidth = 10
       ..strokeCap = StrokeCap.round;
 
-    canvas.drawCircle(center, 20, markingPaint);
-    canvas.drawCircle(center, 10, accentPaint);
+    double m = screenSize.width * screenSize.height / 900000;
 
-    canvas.drawCircle(center, 300, markingPaint);
-    canvas.drawCircle(center, 295, focusPaint);
+    canvas.drawCircle(center, 20 * m, markingPaint);
+    canvas.drawCircle(center, 10 * m, accentPaint);
+
+    canvas.drawCircle(center, 300 * m, markingPaint);
+    canvas.drawCircle(center, 295 * m, focusPaint);
 
     //draw grid
 /*    canvas.drawLine(Offset(center.dx-300, center.dy), Offset(center.dx+300, center.dy), Paint());
@@ -105,8 +110,8 @@ class _FacePainter extends CustomPainter {
 
       angle = angleRadians - pi / 2.0 + i * pi / 6.0;
 
-      position1 = center + Offset(cos(angle), sin(angle)) * 250;
-      position2 = center + Offset(cos(angle), sin(angle)) * 280;
+      position1 = center + Offset(cos(angle), sin(angle)) * 250 * m;
+      position2 = center + Offset(cos(angle), sin(angle)) * 280 * m;
 
       if (i != 0) {
         canvas.drawLine(position1, position2, accentPaint);
@@ -116,18 +121,18 @@ class _FacePainter extends CustomPainter {
       for (int j = 1; j < 5; j++) {
         position1 = center +
             Offset(cos(angle + j * minAngle), sin(angle + j * minAngle)) *
-                ((i == 0 || i == 11) ? 180 : 250);
+                ((i == 0 || i == 11) ? 180 * m : 250 * m);
         position2 = center +
             Offset(cos(angle + j * minAngle), sin(angle + j * minAngle)) *
-                ((i == 0 || i == 11) ? 160 : 280);
+                ((i == 0 || i == 11) ? 160 * m : 280 * m);
 
         canvas.drawLine(position1, position2, markingPaint..strokeWidth = 2);
       }
     }
 
     canvas.drawCircle(
-        center, 260, focusPaint..color = focusColor.withOpacity(0.65));
-    drawNumbers(canvas, markingPaint, center);
+        center, 260 * m, focusPaint..color = focusColor.withOpacity(0.65));
+    drawNumbers(canvas, markingPaint, center, m);
   }
 
   @override
@@ -137,29 +142,29 @@ class _FacePainter extends CustomPainter {
         oldDelegate.markingColor != markingColor;
   }
 
-  void drawNumbers(Canvas canvas, Paint paint, Offset center) {
-    Offset markerPos = Offset(center.dx - 70 / 2, center.dy - 280);
+  void drawNumbers(Canvas canvas, Paint paint, Offset center, double m) {
+    Offset markerPos = Offset(center.dx - 70 * m / 2, center.dy - 280 * m);
 
     Path xii = Path()
       ..moveTo(markerPos.dx, markerPos.dy)
-      ..lineTo(markerPos.dx + 30, markerPos.dy + 70)
-      ..lineTo(markerPos.dx + 40, markerPos.dy + 70)
-      ..lineTo(markerPos.dx + 10, markerPos.dy)
+      ..lineTo(markerPos.dx + 30 * m, markerPos.dy + 70 * m)
+      ..lineTo(markerPos.dx + 40 * m, markerPos.dy + 70 * m)
+      ..lineTo(markerPos.dx + 10 * m, markerPos.dy)
       //
-      ..moveTo(markerPos.dx + 30, markerPos.dy)
-      ..lineTo(markerPos.dx, markerPos.dy + 70)
-      ..lineTo(markerPos.dx + 10, markerPos.dy + 70)
-      ..lineTo(markerPos.dx + 40, markerPos.dy)
+      ..moveTo(markerPos.dx + 30 * m, markerPos.dy)
+      ..lineTo(markerPos.dx, markerPos.dy + 70 * m)
+      ..lineTo(markerPos.dx + 10 * m, markerPos.dy + 70 * m)
+      ..lineTo(markerPos.dx + 40 * m, markerPos.dy)
       //
-      ..moveTo(markerPos.dx + 45, markerPos.dy)
-      ..lineTo(markerPos.dx + 45, markerPos.dy + 70)
-      ..lineTo(markerPos.dx + 55, markerPos.dy + 70)
-      ..lineTo(markerPos.dx + 55, markerPos.dy)
+      ..moveTo(markerPos.dx + 45 * m, markerPos.dy)
+      ..lineTo(markerPos.dx + 45 * m, markerPos.dy + 70 * m)
+      ..lineTo(markerPos.dx + 55 * m, markerPos.dy + 70 * m)
+      ..lineTo(markerPos.dx + 55 * m, markerPos.dy)
       //
-      ..moveTo(markerPos.dx + 60, markerPos.dy)
-      ..lineTo(markerPos.dx + 60, markerPos.dy + 70)
-      ..lineTo(markerPos.dx + 70, markerPos.dy + 70)
-      ..lineTo(markerPos.dx + 70, markerPos.dy);
+      ..moveTo(markerPos.dx + 60 * m, markerPos.dy)
+      ..lineTo(markerPos.dx + 60 * m, markerPos.dy + 70 * m)
+      ..lineTo(markerPos.dx + 70 * m, markerPos.dy + 70 * m)
+      ..lineTo(markerPos.dx + 70 * m, markerPos.dy);
 
     canvas.drawPath(xii, paint);
     canvas.drawShadow(xii, Colors.blue, 5, true);

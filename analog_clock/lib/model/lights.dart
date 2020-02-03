@@ -5,7 +5,7 @@
 
 import 'dart:math';
 
-import '../model/thing.dart';
+import 'thing.dart';
 
 class Lights {
   List<Thing> _switchedOn;
@@ -34,7 +34,7 @@ class Lights {
     shuffledIndex.shuffle();
 
     randomValues =
-        List.generate(24, (index) => shuffledIndex[index % lightCount]);
+        List.generate(24 * 60, (index) => shuffledIndex[index % lightCount]);
   }
 
   List<Thing> get switchedOn {
@@ -48,20 +48,65 @@ class Lights {
   List<Thing> getLightAvailableAt(DateTime now, {bool isSwitchedOn}) {
     List<Thing> lights = [];
     lights.addAll(getBrightness(switchedOn: isSwitchedOn));
-    lights
-        .add((isSwitchedOn ? switchedOn : switchedOff)[randomValues[now.hour]]);
-    lights.add(getWiring());
+    lights.add((isSwitchedOn
+        ? switchedOn
+        : switchedOff)[randomValues[now.hour * 60 + now.minute]]);
+    lights.addAll(getWiring());
 
     return lights;
   }
 
-  Thing getWiring() {
-    return Thing(
-      name: "wiring",
-      filename: "knot.svg",
-      width: 200.0,
-      offBottom: 520.0,
-    );
+  List<Thing> getWiring() {
+    return [
+      Thing(
+        name: "wiring",
+        filename: "knot.svg",
+        width: 200.0,
+        offBottom: 1920.0,
+      ),
+      Thing(
+        name: "wiring",
+        filename: "knot.svg",
+        width: 200.0,
+        offBottom: 1720.0,
+      ),
+      Thing(
+        name: "wiring",
+        filename: "knot.svg",
+        width: 200.0,
+        offBottom: 1520.0,
+      ),
+      Thing(
+        name: "wiring",
+        filename: "knot.svg",
+        width: 200.0,
+        offBottom: 1320.0,
+      ),
+      Thing(
+        name: "wiring",
+        filename: "knot.svg",
+        width: 200.0,
+        offBottom: 1120.0,
+      ),
+      Thing(
+        name: "wiring",
+        filename: "knot.svg",
+        width: 200.0,
+        offBottom: 920.0,
+      ),
+      Thing(
+        name: "wiring",
+        filename: "knot.svg",
+        width: 200.0,
+        offBottom: 720.0,
+      ),
+      Thing(
+        name: "wiring",
+        filename: "knot.svg",
+        width: 200.0,
+        offBottom: 520.0,
+      )
+    ];
   }
 
   List<Thing> getBrightness({bool switchedOn = false}) {

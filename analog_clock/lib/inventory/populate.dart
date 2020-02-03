@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:analog_clock/model/edibles.dart';
-import 'package:analog_clock/model/lights.dart';
-import 'package:analog_clock/model/thing.dart';
+import '../model/lights.dart';
+import '../model/thing.dart';
 
 import 'inventory.dart';
 

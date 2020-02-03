@@ -3,7 +3,7 @@
 // you may not use this file except in compliance with the License that
 // can be found in the LICENSE file.
 
-import 'package:analog_clock/model/thing.dart';
+import '../model/thing.dart';
 import 'package:flutter/cupertino.dart';
 
 abstract class InventoryActionable {

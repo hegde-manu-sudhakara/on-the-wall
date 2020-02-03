@@ -3,12 +3,13 @@
 // you may not use this file except in compliance with the License that
 // can be found in the LICENSE file.
 
-import 'package:analog_clock/model/edibles.dart';
-import 'package:analog_clock/model/lights.dart';
-import 'package:analog_clock/model/thing.dart';
-import 'package:analog_clock/model/tray.dart';
 import 'package:flutter/material.dart';
 
+import '../model/edibles.dart';
+import '../model/lights.dart';
+import '../model/thing.dart';
+
+import '../model/tray.dart';
 import 'populate.dart';
 import 'inventory_actionable.dart';
 

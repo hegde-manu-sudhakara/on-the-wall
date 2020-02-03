@@ -10,7 +10,7 @@ import 'package:flutter/semantics.dart';
 import 'package:intl/intl.dart';
 import 'package:vector_math/vector_math_64.dart' show radians;
 
-import '../inventory//inventory.dart';
+import '../inventory/inventory.dart';
 import 'drawn_clock.dart';
 import 'drawn_thing.dart';
 
@@ -32,34 +32,12 @@ class Scene extends StatefulWidget {
 }
 
 class _SceneState extends State<Scene> with SingleTickerProviderStateMixin {
-  var _now = DateTime(2020, 1, 29, 3, 59, 15);// DateTime.now();
+  var _now = DateTime.now();
   Timer _timer;
-
-  static const Offset offCenter = Offset(-241.5, 1.5);
-
-/*  AnimationController _controller;
-  Animation<Color> _animation;*/
 
   @override
   void initState() {
     super.initState();
-
-/*    _controller = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 10000));
-
-    _animation = TweenSequence([
-      TweenSequenceItem(
-          tween: ColorTween(begin: Colors.grey[300], end: Colors.purple[200]),
-          weight: 1),
-      TweenSequenceItem(
-          tween: ColorTween(begin: Colors.purple[200], end: Colors.grey[300]),
-          weight: 1)
-    ]).animate(_controller)
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          _controller.repeat();
-        }
-      });*/
 
     // Set the initial values.
     _updateTime();
@@ -68,13 +46,12 @@ class _SceneState extends State<Scene> with SingleTickerProviderStateMixin {
   @override
   void dispose() {
     _timer?.cancel();
-//    _controller.dispose();
     super.dispose();
   }
 
   void _updateTime() {
     setState(() {
-      _now = DateTime(2020, 1, 29, 3, 59, 15);// DateTime.now();
+      _now = DateTime.now();
       // Update once per second. Make sure to do it at the beginning of each
       // new second, so that the clock is accurate.
       _timer = Timer(
@@ -104,8 +81,6 @@ class _SceneState extends State<Scene> with SingleTickerProviderStateMixin {
 
     final time = DateFormat.Hms().format(DateTime.now());
 
-//    _controller.forward();
-
     return Semantics.fromProperties(
       properties: SemanticsProperties(
         label: 'Analog clock with time $time',
@@ -115,26 +90,36 @@ class _SceneState extends State<Scene> with SingleTickerProviderStateMixin {
         color: customTheme.backgroundColor,
         child: Stack(
           children: getScreenComponents(
-            customTheme, /* _animation*/
-          ),
+              customTheme, MediaQuery.of(context).size, _now),
         ),
       ),
     );
   }
 
-  List<Widget> getScreenComponents(ThemeData theme, {Animation animation}) {
+  bool shouldAnimate(DateTime time) {
+    if (time.second % 60 == 0) return true;
+    return false;
+  }
+
+  List<Widget> getScreenComponents(
+      ThemeData theme, Size screenSize, DateTime now) {
+    double m = screenSize.width * screenSize.height / 900000;
+    Offset offCenter = Offset(-241.5 * m, 1.5);
+
     List<Widget> components = []
       // adding the clock
-      ..addAll(DrawnClock(theme, offCenter, _now, animation).clock)
+      ..addAll(DrawnClock(theme, offCenter, now).clock)
       // adding the tray
       ..addAll(DrawnThing.getWidgetsSpacedApart(
-          InventoryManager.inventory.getTray()))
+          m, false, InventoryManager.inventory.getTray()))
       // adding the items
-      ..addAll(DrawnThing.getWidgetsSpacedApart(
-          InventoryManager.inventory.getEdiblesAvailableAt(DateTime.now())))
+      ..addAll(DrawnThing.getWidgetsSpacedApart(m, shouldAnimate(now),
+          InventoryManager.inventory.getEdiblesAvailableAt(now)))
       // adding light(s)
-      ..addAll(DrawnThing.getWidgets(InventoryManager.inventory
-          .getLightAvailableAt(DateTime.now(),
+      ..addAll(DrawnThing.getWidgets(
+          m,
+          shouldAnimate(now),
+          InventoryManager.inventory.getLightAvailableAt(now,
               isSwitchedOn: Theme.of(context).brightness == Brightness.light
                   ? false
                   : true)));
